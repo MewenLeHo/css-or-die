@@ -1,0 +1,30 @@
+{
+  "name": "css-or-die",
+  "version": "1.0.0",
+  "description": "Bookmarklet to detect HTML elements and attributes that should be replaced with CSS because styling with HTML tags is so 1999.",
+  "main": "cssordie.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MewenLeHo/css-or-die.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MewenLeHo/css-or-die/issues"
+  },
+  "homepage": "https://github.com/MewenLeHo/css-or-die#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.36.0",
+    "eslint": "^9.36.0",
+    "globals": "^16.4.0"
+  }
+}

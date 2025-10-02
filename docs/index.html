@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS or Die - Demo</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      padding: 2rem;
+      line-height: 1.6;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    fieldset {
+      margin-bottom: 2rem;
+      border: 1px solid #ccc;
+      padding: 1rem;
+    }
+
+    legend {
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .launch-btn {
+      background: #0d6efd;
+      color: #fff;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 1rem;
+      font-size: 1rem;
+    }
+
+    .launch-btn:hover {
+      background: #084298;
+    }
+
+    .note {
+      font-size: 0.9em;
+      color: #666;
+      margin-top: 1rem;
+    }
+
+    code {
+      background: #f5f5f5;
+      padding: 0.1rem 0.3rem;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1><span aria-hidden="true">🎨</span> Presentation CSSorDie - Demo</h1>
+  <p>This demo lets you test a bookmarklet that audits forbidden presentation markup (RGAA 10.1.1 & 10.1.2).</p>
+
+  <fieldset>
+    <legend><span aria-hidden="true">❌</span> Forbidden tags (10.1.1)</legend>
+    <p><b>Bold text with &lt;b&gt;</b></p>
+    <p><i>Italic text with &lt;i&gt;</i></p>
+    <p><u>Underlined text with &lt;u&gt;</u></p>
+    <p>
+      <center>Centered text with &lt;center&gt;</center>
+    </p>
+    <p>
+      <font color="red">Text with &lt;font&gt;</font>
+    </p>
+    <p><s>Strikethrough with &lt;s&gt;</s></p>
+    <p><big>Big text with &lt;big&gt;</big></p>
+    <p><small>Small text with &lt;small&gt;</small></p>
+  </fieldset>
+
+  <fieldset>
+    <legend><span aria-hidden="true">❌</span> Forbidden attributes (10.1.2)</legend>
+    <p align="center">Paragraph with <code>align</code></p>
+    <table border="1" bgcolor="lightgrey" width="200">
+      <tr>
+        <td valign="top">Cell with <code>valign</code></td>
+      </tr>
+    </table>
+    <img src="https://via.placeholder.com/100" width="50" height="30" alt="Placeholder with width/height" />
+  </fieldset>
+
+  <fieldset>
+    <legend><span aria-hidden="true">✅</span> Valid semantic markup</legend>
+    <strong>Bold with &lt;strong&gt;</strong><br />
+    <em>Italic with &lt;em&gt;</em><br />
+    <p class="highlight">Styled via CSS class</p>
+  </fieldset>
+
+  <button class="launch-btn" id="runAudit">Run CSSorDie Audit</button>
+  <p class="note">The audit script will be dynamically loaded and executed.</p>
+
+  <p class="note">
+    <span aria-hidden="true">ℹ️</span> Learn more in the
+    <a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#10.1" target="_blank"
+      rel="noopener">RGAA 10.1 criteria</a>.
+  </p>
+</body>
+
+<script>
+  const btn = document.getElementById('runAudit');
+  btn.addEventListener('click', runAudit);
+  function runAudit() {
+    const script = document.createElement("script");
+    script.src = "https://cdn.jsdelivr.net/gh/MewenLeHo/CSSorDie@main/CSSorDie.min.js";
+    document.body.appendChild(script);
+  }
+</script>
+
+</html>
