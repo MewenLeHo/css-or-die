@@ -30,7 +30,7 @@ export default defineConfig([
       "package.json",
       "package-lock.json",
       "README.md",
-      "cssordie.min.js",
+      "dist/**",
     ],
   },
 ]);
