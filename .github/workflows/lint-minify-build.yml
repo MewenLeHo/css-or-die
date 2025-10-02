@@ -79,8 +79,4 @@ jobs:
           git config --local user.name "GitHub Actions"
           git config --local user.email "actions@github.com"
           git add dist/
-          if git diff --cached --quiet; then
-            echo "No changes to commit."
-          else
-            git commit -m "Build dist files [auto]"
-            git push
+          git diff --cached --quiet || (git commit -m "Build dist files [auto]" && git push)
