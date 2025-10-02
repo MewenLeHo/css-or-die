@@ -59,7 +59,7 @@
 </head>
 
 <body>
-  <h1><span aria-hidden="true">🎨</span> Presentation CSSorDie - Demo</h1>
+  <h1><span aria-hidden="true">🎨</span> CSS or Die - Demo</h1>
   <p>This demo lets you test a bookmarklet that audits forbidden presentation markup (RGAA 10.1.1 & 10.1.2).</p>
 
   <fieldset>
@@ -109,10 +109,15 @@
 <script>
   const btn = document.getElementById('runAudit');
   btn.addEventListener('click', runAudit);
+
   function runAudit() {
-    const script = document.createElement("script");
-    script.src = "https://cdn.jsdelivr.net/gh/MewenLeHo/CSSorDie@main/CSSorDie.min.js";
-    document.body.appendChild(script);
+    // Prevent adding the script multiple times
+    if (!document.getElementById('cssordie-script')) {
+      const script = document.createElement("script");
+      script.id = "cssordie-script";
+      script.src = "https://cdn.jsdelivr.net/gh/MewenLeHo/css-or-die@main/dist/cssordie.min.js";
+      document.body.appendChild(script);
+    }
   }
 </script>
 
