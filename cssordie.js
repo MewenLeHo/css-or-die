@@ -1,12 +1,35 @@
 (function () {
   // Remove existing elements and styles from previous executions
-  document
-    .querySelectorAll('.css-panel, #css-or-die-style')
-    .forEach((el) => el.remove());
+  function cleanup() {
+    document.querySelectorAll('.css-panel').forEach((el) => el.remove());
+    const existingStyle = document.querySelector('#css-styles');
+    if (existingStyle) existingStyle.remove();
+  }
+  cleanup();
 
   // Initialize core variables
   // Create DocumentFragment for better performance
   const fragment = document.createDocumentFragment();
+
+  // Messages configuration
+  const messages = {
+    ui: {
+      panelTitle: 'CSS or Die',
+      tagsTitle: 'Forbidden Tags',
+      attributesTitle: 'Forbidden Attributes',
+      noTagsTitle: 'No forbidden tags found',
+      noAttributesTitle: 'No forbidden attributes found',
+      escapeHint: 'Use <kbd>Esc</kbd> to close panel',
+    },
+    buttons: {
+      close: 'Close',
+      darkLight: 'Dark/Light',
+      screenReaderLabels: {
+        panel: ' the panel',
+        mode: ' mode toggle',
+      },
+    },
+  };
 
   // Styles
   const style = document.createElement('style');
@@ -46,16 +69,75 @@
     .css-panel details {
       margin-bottom: 0.5em;
     }
-    .css-close {
-      float: right;
-      cursor: pointer;
-      font-size: 1.2em;
+    .css-panel p {
+      font-size: 1em;
+    }
+    .css-footer {
+      display: flex;
+      flex-direction: column;
+    }
+    .css-btn {
+      margin: 5px;
+      padding: 5px 10px;
       border: none;
-      background: transparent;
+      border-radius: 3px;
+      background: #0d6efd;
+      color: #fff;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    .css-btn:focus {
+      outline: 2px solid #0d6efd;
+      outline-offset: 2px;
+      box-shadow: 0 0 10px rgba(13, 110, 253, 0.25);
     }
     .css-empty {
       color: green;
       font-weight: bold;
+    }
+    @media (forced-colors: active) {
+      .css-btn:focus {
+        outline: 3px solid #000;
+        outline-offset: 3px;
+      }
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .css-panel {
+        animation: fadeIn 0.5s ease-out;
+      }
+    }
+    @media (prefers-color-scheme: dark) {
+      .css-panel {
+        background: #1e1e1e;
+        color: #f0f0f0;
+      }
+    }
+    body.css-dark .css-panel {
+      background: #1e1e1e;
+      color: #eee;
+    }
+    .visually-hidden {
+      border: 0 !important;
+      clip: rect(1px, 1px, 1px, 1px) !important;
+      -webkit-clip-path: inset(50%) !important;
+        clip-path: inset(50%) !important;
+      height: 1px !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      padding: 0 !important;
+      position: absolute !important;
+      width: 1px !important;
+      white-space: nowrap !important;
     }
   `;
   fragment.appendChild(style);
@@ -140,12 +222,10 @@
     ? tagResults
       .map(
         (r) => `
-        <details open>
-          <summary><code>&lt;${r.tag}&gt;</code> (${
-    r.elements.length
-  })</summary>
-          <ul>
-            ${r.elements
+      <details open>
+        <summary><code>&lt;${r.tag}&gt;</code> (${r.elements.length})</summary>
+        <ul>
+          ${r.elements
     .map(
       (el) =>
         `<li><code>${el.outerHTML
@@ -153,12 +233,12 @@
           .slice(0, 80)}...</code></li>`
     )
     .join('')}
-          </ul>
-        </details>
-      `
+        </ul>
+      </details>
+    `
       )
       .join('')
-    : '<p class="css-empty">✅ No forbidden tags found</p>';
+    : `<p class="css-empty">${messages.ui.noTagsTitle}</p>`;
 
   const attrList = attrResults.length
     ? `<ul>${attrResults
@@ -169,7 +249,7 @@
           }</code> on <code>&lt;${r.el.tagName.toLowerCase()}&gt;</code></li>`
       )
       .join('')}</ul>`
-    : '<p class="css-empty">✅ No forbidden attributes found</p>';
+    : `<p class="css-empty">${messages.ui.noAttributesTitle}</p>`;
 
   // Display results panel
   const panel = document.createElement('div');
@@ -178,26 +258,78 @@
   panel.setAttribute('aria-modal', 'true');
   panel.setAttribute('aria-labelledby', 'css-panel-title');
   panel.innerHTML = `
-    <button class="css-close" aria-label="Close">&times;</button>
-    <p id="css-panel-title">CSS or Die</p>
-    <h2>Forbidden Tags (${tagResults.reduce(
+    <p id="css-panel-title">${messages.ui.panelTitle}</p>
+    <h2>${messages.ui.tagsTitle} (${tagResults.reduce(
     (sum, r) => sum + r.elements.length,
     0
   )})</h2>
     ${tagList}
-    <h2>Forbidden Attributes (${attrResults.length})</h2>
+    <h2>${messages.ui.attributesTitle} (${attrResults.length})</h2>
     ${attrList}
+    <div class="css-footer">
+      <button class="css-btn" id="css-cleanup">
+      ${messages.buttons.close}
+      <span class="visually-hidden">${
+  messages.buttons.screenReaderLabels.panel
+  }</span>
+      </button>
+      <button class="css-btn" id="css-theme">
+      ${messages.buttons.darkLight}
+      <span class="visually-hidden">${
+  messages.buttons.screenReaderLabels.mode
+  }</span>
+      </button>
+    </div>
+    <p>
+      <small>${messages.ui.escapeHint}</small>
+    </p>
   `;
   fragment.appendChild(panel);
-
-  // Add close button behavior
-  panel.querySelector('.css-close').addEventListener('click', () => {
-    panel.remove();
-    style.remove();
-  });
 
   // Add complete fragment to DOM
   requestAnimationFrame(() => {
     document.body.insertBefore(fragment, document.body.firstChild);
+
+    const panel = document.querySelector('.css-panel');
+
+    // Focus
+    if (panel) {
+      const firstButton = panel.querySelector('button');
+      if (firstButton) {
+        firstButton.focus();
+      }
+
+      // Escape shortcut
+      panel.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          cleanup();
+          document.activeElement?.blur();
+        }
+      });
+    }
+
+    // Add event listeners after elements are in DOM
+    // Initialize states
+    let isDarkMode = false;
+
+    // Handle theme toggle
+    const themeButton = document.getElementById('css-theme');
+    if (themeButton) {
+      themeButton.setAttribute('aria-pressed', 'false'); // Initial state
+      themeButton.addEventListener('click', () => {
+        isDarkMode = !isDarkMode;
+        themeButton.setAttribute('aria-pressed', isDarkMode ? 'true' : 'false');
+
+        requestAnimationFrame(() => {
+          document.body.classList.toggle('css-dark');
+        });
+      });
+    }
+
+    // Handle cleanup button
+    const cleanupButton = document.getElementById('css-cleanup');
+    if (cleanupButton) {
+      cleanupButton.addEventListener('click', cleanup);
+    }
   });
 })();
