@@ -49,7 +49,6 @@
       max-height: 70vh;
       overflow: auto;
       font-family: -apple-system, system-ui, sans-serif;
-      font-size: 14px;
     }
     #css-panel-title {
       font-size: 1.2em;
@@ -83,7 +82,7 @@
       border-radius: 3px;
       background: #0d6efd;
       color: #fff;
-      font-size: 1em;
+      font-size: .8em;
       cursor: pointer;
     }
     .css-btn:focus {
@@ -121,10 +120,18 @@
         background: #1e1e1e;
         color: #f0f0f0;
       }
+      .css-panel code {
+        background: #333333;
+        color: #4bb4e6;
+      }
     }
     body.css-dark .css-panel {
       background: #1e1e1e;
       color: #eee;
+    }
+    body.css-dark .css-panel code {
+      background: #333333;
+      color: #4bb4e6;
     }
     .visually-hidden {
       border: 0 !important;
