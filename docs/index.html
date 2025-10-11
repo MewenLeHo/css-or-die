@@ -24,6 +24,10 @@
       padding: 1rem;
     }
 
+    fieldset * {
+      display: block;
+    }
+
     legend {
       font-weight: bold;
       font-size: 1.1rem;
@@ -86,14 +90,23 @@
         <td valign="top">Cell with <code>valign</code></td>
       </tr>
     </table>
-    <img src="https://via.placeholder.com/100" width="50" height="30" alt="Placeholder with width/height" />
+    <label for="idTestInput">Input with size attribute</label>
+    <input type="text" size="15" id="idTestInput" />
   </fieldset>
 
   <fieldset>
     <legend><span aria-hidden="true">✅</span> Valid semantic markup</legend>
-    <strong>Bold with &lt;strong&gt;</strong><br />
-    <em>Italic with &lt;em&gt;</em><br />
+    <strong>Bold with &lt;strong&gt;</strong>
+    <em>Italic with &lt;em&gt;</em>
     <p class="highlight">Styled via CSS class</p>
+    <label for="idTestSelect">Select with size attribute</label>
+    <select name="vegetables" size="5" id="idTestSelect">
+      <option>Tyrannosaurus</option>
+      <option>Ankylosaurus</option>
+      <option>Triceratops</option>
+      <option>Stegosaurus</option>
+    </select>
+    <img src="https://placehold.co/200" width="200" height="200" alt="Placeholder with width/height" />
   </fieldset>
 
   <button class="launch-btn" id="runAudit">Run CSSorDie Audit</button>

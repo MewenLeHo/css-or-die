@@ -4,7 +4,10 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+## [1.1.0] – 2025-10-03
+
 ### Fixed
+- **Validation Issues**: Fixed bugs related to the detection of `size` attribute.
 - **UI Glitches**: Fixed minor UI glitches in the control panel when in dark mode.
 
 ## [1.0.0] – 2025-10-03

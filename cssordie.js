@@ -208,7 +208,7 @@
     });
     // width/height attributes restricted
     if (el.hasAttribute('width') || el.hasAttribute('height')) {
-      const allowedTags = [
+      const allowedTagsForWidthAndHeight = [
         'img',
         'object',
         'embed',
@@ -217,9 +217,16 @@
         'svg',
         'iframe',
       ];
-      if (!allowedTags.includes(el.tagName.toLowerCase())) {
+      if (!allowedTagsForWidthAndHeight.includes(el.tagName.toLowerCase())) {
         if (el.hasAttribute('width')) attrResults.push({ el, attr: 'width' });
         if (el.hasAttribute('height')) attrResults.push({ el, attr: 'height' });
+      }
+    }
+    // size attribute restricted
+    if (el.hasAttribute('size')) {
+      const allowedTagsForSize = ['select'];
+      if (!allowedTagsForSize.includes(el.tagName.toLowerCase())) {
+        attrResults.push({ el, attr: 'size' });
       }
     }
   });
