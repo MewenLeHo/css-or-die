@@ -2,7 +2,7 @@
   // Remove existing elements and styles from previous executions
   function cleanup() {
     document.querySelectorAll('.css-panel').forEach((el) => el.remove());
-    const existingStyle = document.querySelector('#css-styles');
+    const existingStyle = document.querySelector('#cod-styles');
     if (existingStyle) existingStyle.remove();
   }
   cleanup();
@@ -33,7 +33,7 @@
 
   // Styles
   const style = document.createElement('style');
-  style.id = 'css-or-die-style';
+  style.id = 'cod-styles';
   style.textContent = `
     .css-panel {
       position: fixed;
@@ -65,6 +65,9 @@
       padding: 0.1rem 0.3rem;
       border-radius: 3px;
     }
+    .css-panel summary {
+      cursor: pointer;
+    }
     .css-panel details {
       margin-bottom: 0.5em;
     }
@@ -91,7 +94,7 @@
       box-shadow: 0 0 10px rgba(13, 110, 253, 0.25);
     }
     .css-empty {
-      color: green;
+      color: #006400;
       font-weight: bold;
     }
     @media (forced-colors: active) {
@@ -124,6 +127,9 @@
         background: #333333;
         color: #4bb4e6;
       }
+      .css-empty {
+        color: #9fdf9f;
+      }
     }
     body.css-dark .css-panel {
       background: #1e1e1e;
@@ -132,6 +138,9 @@
     body.css-dark .css-panel code {
       background: #333333;
       color: #4bb4e6;
+    }
+    body.css-dark .css-empty {
+      color: #9fdf9f;
     }
     .visually-hidden {
       border: 0 !important;
@@ -271,6 +280,8 @@
   panel.setAttribute('role', 'dialog');
   panel.setAttribute('aria-modal', 'true');
   panel.setAttribute('aria-labelledby', 'css-panel-title');
+  panel.setAttribute('aria-live', 'polite');
+  panel.setAttribute('aria-keyshortcuts', 'Escape');
   panel.innerHTML = `
     <p id="css-panel-title">${messages.ui.panelTitle}</p>
     <h2>${messages.ui.tagsTitle} (${tagResults.reduce(
