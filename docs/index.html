@@ -24,7 +24,8 @@
       padding: 1rem;
     }
 
-    fieldset * {
+    fieldset label,
+    fieldset img {
       display: block;
     }
 
@@ -50,7 +51,7 @@
 
     .note {
       font-size: 0.9em;
-      color: #666;
+      color: #333;
       margin-top: 1rem;
     }
 
@@ -75,7 +76,7 @@
       <center>Centered text with &lt;center&gt;</center>
     </p>
     <p>
-      <font color="red">Text with &lt;font&gt;</font>
+      <font color="#a31b1b">Text with &lt;font&gt;</font>
     </p>
     <p><s>Strikethrough with &lt;s&gt;</s></p>
     <p><big>Big text with &lt;big&gt;</big></p>
@@ -124,13 +125,15 @@
   btn.addEventListener('click', runAudit);
 
   function runAudit() {
-    // Prevent adding the script multiple times
-    if (!document.getElementById('cssordie-script')) {
-      const script = document.createElement("script");
-      script.id = "cssordie-script";
-      script.src = "https://cdn.jsdelivr.net/gh/MewenLeHo/css-or-die@main/dist/cssordie.min.js";
-      document.body.appendChild(script);
+    const existingScript = document.getElementById('cssordie-script');
+    if (existingScript) {
+      existingScript.remove(); // Supprime le script pour permettre un rechargement
     }
+
+    const script = document.createElement("script");
+    script.id = "cssordie-script";
+    script.src = "https://cdn.jsdelivr.net/gh/MewenLeHo/css-or-die@main/dist/cssordie.min.js";
+    document.body.appendChild(script);
   }
 </script>
 
