@@ -7,7 +7,7 @@ Bookmarklet to detect HTML elements and attributes that should be replaced with 
 ## CI/CD Status
 
 ### Workflows
-[![Lint, Minify and Build workflow](https://github.com/MewenLeHo/css-or-die/actions/workflows/lint-minify-build.yml/badge.svg)](https://github.com/MewenLeHo/css-or-die/actions/workflows/lint-minify.yml)
+[![Lint, Minify and Build workflow](https://github.com/MewenLeHo/css-or-die/actions/workflows/lint-minify-build.yml/badge.svg)](https://github.com/MewenLeHo/css-or-die/actions/workflows/lint-minify-build.yml)
 [![Release workflow](https://github.com/MewenLeHo/css-or-die/actions/workflows/release.yml/badge.svg)](https://github.com/MewenLeHo/css-or-die/actions/workflows/release.yml)
 
 ### Latest Release
